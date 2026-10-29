@@ -10,19 +10,19 @@ lazy val root = project
     sbtPlugin := true,
 
     libraryDependencies += {
-      val currentSbtVersion = (pluginCrossBuild/sbtBinaryVersion).value
+      val currentSbtVersion = (pluginCrossBuild / sbtBinaryVersion).value
       Defaults.sbtPluginExtra("com.github.sbt" % "sbt-git" % "2.1.0", currentSbtVersion, scalaBinaryVersion.value)
     },
 
     libraryDependencies += "org.slf4j" % "slf4j-nop" % "2.0.16",
 
-    description := "An SBT plugin for making your SBT prompt more awesome",
-    organization := "com.scalapenos",
-    licenses := List("MIT" -> url("http://opensource.org/licenses/MIT")),
-    startYear := Some(2014),
-    homepage := Some(url("https://github.com/agemooij/sbt-prompt")),
-    organizationHomepage := Some(url("https://github.com/agemooij/sbt-prompt")),  
-    developers := List(
+    description          := "An SBT plugin for making your SBT prompt more awesome",
+    organization         := "com.scalapenos",
+    licenses             := List("MIT" -> url("http://opensource.org/licenses/MIT")),
+    startYear            := Some(2014),
+    homepage             := Some(url("https://github.com/agemooij/sbt-prompt")),
+    organizationHomepage := Some(url("https://github.com/agemooij/sbt-prompt")),
+    developers           := List(
       Developer(
         "agemooij",
         "Age Mooij",
@@ -42,5 +42,5 @@ lazy val root = project
 
     tpolecatScalacOptions ++= Set(ScalacOptions.explain),
     Test / tpolecatExcludeOptions ++= Set(ScalacOptions.warnNonUnitStatement, ScalacOptions.warnValueDiscard),
-    Test / console / tpolecatExcludeOptions ++= ScalacOptions.defaultConsoleExclude,
+    Test / console / tpolecatExcludeOptions ++= ScalacOptions.defaultConsoleExclude
   )

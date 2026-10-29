@@ -28,7 +28,7 @@ case class PromptTheme(promptlets: Seq[Promptlet], separator: PromptletSeparator
 }
 
 object PromptTheme {
-  def apply(promptlets: Seq[Promptlet]): PromptTheme = apply(promptlets, PromptletSeparators.NoSeparator)
+  def apply(promptlets: Seq[Promptlet]): PromptTheme                                                   = apply(promptlets, PromptletSeparators.NoSeparator)
   def apply(promptlets: Seq[Promptlet], separator: (StyledText, StyledText) ⇒ StyledText): PromptTheme = {
     apply(promptlets, PromptletSeparator(separator))
   }
