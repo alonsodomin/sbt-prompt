@@ -50,3 +50,4 @@ revision.txt
 /project/.bloop
 /project/project
 /project/metals.sbt
+.direnv/

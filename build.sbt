@@ -11,10 +11,10 @@ lazy val root = project
 
     libraryDependencies += {
       val currentSbtVersion = (pluginCrossBuild / sbtBinaryVersion).value
-      Defaults.sbtPluginExtra("com.github.sbt" % "sbt-git" % "2.1.0", currentSbtVersion, scalaBinaryVersion.value)
+      Defaults.sbtPluginExtra("com.github.sbt" % "sbt-git" % "2.2.0", currentSbtVersion, scalaBinaryVersion.value)
     },
 
-    libraryDependencies += "org.slf4j" % "slf4j-nop" % "2.0.16",
+    libraryDependencies += "org.slf4j" % "slf4j-nop" % "2.0.20",
 
     description          := "An SBT plugin for making your SBT prompt more awesome",
     organization         := "com.scalapenos",
@@ -28,6 +28,12 @@ lazy val root = project
         "Age Mooij",
         "age.mooij@gmail.com",
         url("https://github.com/agemooij/")
+      ),
+      Developer(
+        "alonsodomin",
+        "Alonso Dominguez",
+        "work@alonsodomin.me",
+        url("https://github.com/alonsodomin")
       )
     ),
 
