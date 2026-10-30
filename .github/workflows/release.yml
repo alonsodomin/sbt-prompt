@@ -12,6 +12,7 @@ jobs:
           fetch-depth: 0
       - uses: sbt/setup-sbt@v1
       - uses: cachix/install-nix-action@v31
+      - run: nix flake check
       - run: nix develop --command sbt ci-release
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
