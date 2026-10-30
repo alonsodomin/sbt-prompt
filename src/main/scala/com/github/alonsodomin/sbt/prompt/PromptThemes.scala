@@ -77,7 +77,7 @@ trait PromptThemes extends Promptlets with PromptletSeparators {
         .padLeft(" \ue0a0 ")
         .padRight(" "),
       currentScalaVersion(bg("#375780").fg("#FF8080")).padLeft(" \ue737 ").padRight(" "),
-      text("\u200b", NoStyle)
+      text(" ", NoStyle) // Blank space for separation between the prompt and the cursor
     ),
     (previous, next) => StyledText("\ue0b0", fg(previous.style.background).bg(next.style.background))
   )

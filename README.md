@@ -231,7 +231,7 @@ PromptTheme(
 ```
 
 #### The Blueforest theme
-The Blueforest theme is a powerline prompt in the blueforest palette: the sbt logo, the current project, the current Git branch and the Scala version of the project, joined by powerline arrows and closed off with a tip. The branch is green when the working tree is clean and yellow when it is dirty.
+The Blueforest theme is a powerline prompt in the blueforest palette: the sbt logo, the current project, the current Git branch and the Scala version of the project, joined by powerline arrows and closed off with a tip. The branch is green when the working tree is clean and yellow when it is dirty. The prompt ends with a blank column between the tip and the cursor.
 
 The palette is expressed in 24-bit true color, so it is exact instead of the nearest ANSI 256 approximation, and the theme uses Nerd Font glyphs for the logo and the separators. You will need a terminal that supports true color and a [Nerd Font](https://www.nerdfonts.com/) to render it properly.
 
@@ -244,7 +244,7 @@ PromptTheme(
       .padLeft(" \ue0a0 ")
       .padRight(" "),
     currentScalaVersion(bg("#375780").fg("#FF8080")).padLeft(" \ue737 ").padRight(" "),
-    text("\u200b", NoStyle)
+    text(" ", NoStyle)
   ),
   (previous, next) => StyledText("\ue0b0", fg(previous.style.background).bg(next.style.background))
 )
