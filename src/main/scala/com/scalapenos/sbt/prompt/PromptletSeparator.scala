@@ -11,12 +11,12 @@ package com.scalapenos.sbt.prompt
  *
  * See the pre-packaged themes for some examples.
  */
-case class PromptletSeparator(f: (StyledText, StyledText) ⇒ StyledText) {
+case class PromptletSeparator(f: (StyledText, StyledText) => StyledText) {
   def render(previous: StyledText, next: StyledText) = f(previous, next)
 }
 
 trait PromptletSeparators extends Styles {
-  val NoSeparator = PromptletSeparator((_, _) ⇒ StyledText.Empty)
+  val NoSeparator = PromptletSeparator((_, _) => StyledText.Empty)
 }
 
 object PromptletSeparators extends PromptletSeparators

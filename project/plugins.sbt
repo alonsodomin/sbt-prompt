@@ -1,6 +1,6 @@
-addSbtPlugin("ch.epfl.scala"    % "sbt-scalafix"   % "0.14.3")
+addSbtPlugin("ch.epfl.scala"    % "sbt-scalafix"   % "0.14.9")
 addSbtPlugin("org.scalameta"    % "sbt-scalafmt"   % "2.5.4")
 addSbtPlugin("com.timushev.sbt" % "sbt-updates"    % "0.7.1")
-addSbtPlugin("org.typelevel"    % "sbt-tpolecat"   % "0.5.2")
+addSbtPlugin("org.typelevel"    % "sbt-tpolecat"   % "0.5.7")
 addSbtPlugin("com.github.sbt"   % "sbt-ci-release" % "1.12.1")
 addSbtPlugin("com.timushev.sbt" % "sbt-rewarn"     % "0.2.0")

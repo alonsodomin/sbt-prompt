@@ -9,11 +9,11 @@ trait GitPromptlets extends Styles {
   import com.github.sbt.git.SbtGit._
 
   def gitBranch(clean: Style = NoStyle, dirty: Style = NoStyle): Promptlet = gitPromptlet {
-    case Some(git) ⇒ StyledText(git.branch, if (git.status.dirty) dirty else clean)
-    case None      ⇒ StyledText.Empty
+    case Some(git) => StyledText(git.branch, if (git.status.dirty) dirty else clean)
+    case None      => StyledText.Empty
   }
 
-  def gitPromptlet(render: Option[GitInfo] ⇒ StyledText): Promptlet = Promptlet(state ⇒ render(gitInfo(state)))
+  def gitPromptlet(render: Option[GitInfo] => StyledText): Promptlet = Promptlet(state => render(gitInfo(state)))
 
   case class GitInfo(branch: String, status: GitStatus)
   case class GitStatus(nrModified: Int, nrUntracked: Int) {
@@ -34,7 +34,7 @@ trait GitPromptlets extends Styles {
   }
 
   private def gitBranch(state: State)(implicit dir: File, extracted: Extracted): String = {
-    val reader           = extracted get GitKeys.gitReader
+    val reader           = extracted.get(GitKeys.gitReader)
     val branchFromReader = reader.withGit(_.branch)
 
     if (branchFromReader != null) branchFromReader
@@ -65,15 +65,9 @@ trait GitPromptlets extends Styles {
   }
 
   private object NoOpSbtLogger extends Logger {
-    def trace(t: ⇒ Throwable): Unit                      = {}
-    def success(message: ⇒ String): Unit                 = {}
-    def log(level: Level.Value, message: ⇒ String): Unit = {}
-  }
-
-  private object DebugSbtLogger extends Logger {
-    def trace(t: ⇒ Throwable): Unit                      = {}
-    def success(message: ⇒ String): Unit                 = { println(s"SUCCESS: ${message}.") }
-    def log(level: Level.Value, message: ⇒ String): Unit = { println(s"LOG: ${message}.") }
+    def trace(t: => Throwable): Unit                      = {}
+    def success(message: => String): Unit                 = {}
+    def log(level: Level.Value, message: => String): Unit = {}
   }
 }
 

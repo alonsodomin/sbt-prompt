@@ -14,7 +14,7 @@ sealed trait StyledText {
    * the original and the text tranformed using the specified
    * function.
    */
-  def mapText(f: String ⇒ String): StyledText
+  def mapText(f: String => String): StyledText
 
   lazy val rendered     = style.render(text)
   override def toString = rendered
@@ -26,8 +26,8 @@ object StyledText {
   }
 
   case class NonEmpty(text: String, style: Style = Styles.NoStyle) extends StyledText {
-    val isEmpty                     = false
-    def mapText(f: String ⇒ String) = copy(text = f(text))
+    val isEmpty                      = false
+    def mapText(f: String => String) = copy(text = f(text))
   }
 
   /**
@@ -40,7 +40,7 @@ object StyledText {
     val text  = ""
     val style = Styles.NoStyle
 
-    val isEmpty                     = true
-    def mapText(f: String ⇒ String) = this
+    val isEmpty                      = true
+    def mapText(f: String => String) = this
   }
 }

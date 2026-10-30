@@ -18,7 +18,7 @@ object SbtPrompt extends AutoPlugin {
   override def projectSettings = Seq(
     promptTheme := PromptThemes.DefaultTheme,
 
-    /** Sets the SBT shell prompt to a function that renders the configured prompt theme. */
-    shellPrompt := (state ⇒ promptTheme.value.render(state))
+    // Sets the SBT shell prompt to a function that renders the configured prompt theme.
+    shellPrompt := (state => promptTheme.value.render(state))
   )
 }

@@ -11,11 +11,11 @@ import Keys._
 trait Promptlets extends BasicPromptlets with GitPromptlets
 
 trait BasicPromptlets extends Styles {
-  def text(content: String, style: Style): Promptlet         = text(_ ⇒ content, style)
-  def text(content: State ⇒ String, style: Style): Promptlet = Promptlet(state ⇒ StyledText(content(state), style))
+  def text(content: String, style: Style): Promptlet          = text(_ => content, style)
+  def text(content: State => String, style: Style): Promptlet = Promptlet(state => StyledText(content(state), style))
 
   def currentProject(style: Style = NoStyle): Promptlet = text(
-    state ⇒ {
+    state => {
       val extracted = Project.extract(state)
       val project   = extracted.currentRef.project
       val root      = extracted.rootProject(extracted.currentRef.build)
@@ -25,11 +25,11 @@ trait BasicPromptlets extends Styles {
     style
   )
 
-  def userName(style: Style = NoStyle): Promptlet = text(_ ⇒ cachedUserName, style)
-  def hostName(style: Style = NoStyle): Promptlet = text(_ ⇒ cachedHostName, style)
+  def userName(style: Style = NoStyle): Promptlet = text(_ => cachedUserName, style)
+  def hostName(style: Style = NoStyle): Promptlet = text(_ => cachedHostName, style)
 
-  def currentSbtKey(settingKey: SettingKey[_], style: Style = NoStyle): Promptlet = text(
-    state ⇒ {
+  def currentSbtKey[T](settingKey: SettingKey[T], style: Style = NoStyle): Promptlet = text(
+    state => {
       val extracted = Project.extract(state)
       s"${extracted.get(settingKey)}"
     },

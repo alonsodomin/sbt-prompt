@@ -94,7 +94,7 @@ gitBranch(clean = fg(green), dirty = fg(red))
 
 If the current project is not a Git repository, this promptlet will produce ``StyledText.Empty``.
 
-#### Promplet: ``gitPromptlet(render: Option[GitInfo] ⇒ StyledText)``
+#### Promplet: ``gitPromptlet(render: Option[GitInfo] => StyledText)``
 The more powerful form of ``gitBranch``, which lets you use more specific Git status information to produce some styled text. If the current project is not a Git repository, the ``Option[GitInfo]`` parameter to the ``render`` function will be ``None``.
 
 The available Git information is encoded in these two case classes:
@@ -110,8 +110,8 @@ The ``gitBranch`` promptlet is built using ``gitPromptlet``:
 
 ```scala
 def gitBranch(clean: Style = NoStyle, dirty: Style = NoStyle): Promptlet = gitPromptlet {
-  case Some(git) ⇒ StyledText(git.branch, if (git.status.dirty) dirty else clean)
-  case None      ⇒ StyledText.Empty
+  case Some(git) => StyledText(git.branch, if (git.status.dirty) dirty else clean)
+  case None      => StyledText.Empty
 }
 ```
 
@@ -159,13 +159,13 @@ Renders the specified static text. Example:
 text(fg(235).bg(26)) // using raw ANSI 256 color codes
 ```
 
-#### Promptlet: ``text(text: State ⇒ String, style)``
+#### Promptlet: ``text(text: State => String, style)``
 Allows you to extract whatever information you want from the [current project State](http://www.scala-sbt.org/0.13.6/api/#sbt.State) and render it as dynamic text every time the prompt gets re-drawn.
 
 As an example, this is how the ``projectName`` promptlet is implemented:
 
 ```scala
-def currentProject(style: Style = NoStyle): Promptlet = text(state ⇒ {
+def currentProject(style: Style = NoStyle): Promptlet = text(state => {
   val extracted = Project.extract(state)
   val project = extracted.currentRef.project
   val root = extracted.rootProject(extracted.currentRef.build)
@@ -175,7 +175,7 @@ def currentProject(style: Style = NoStyle): Promptlet = text(state ⇒ {
 ```
 
 #### Post-processing styled text with ``mapText``
-Sometimes you want to take an existing promptlet like ``gitBranch`` and add some extra text to it in the same style. Enter the ``mapText(String ⇒ String)`` function, available on all promptlets, which allows you to post-process the raw text any way you want. For your convenience some common post-processors like ``padLeft`` and ``padRight`` have alrady been defined.
+Sometimes you want to take an existing promptlet like ``gitBranch`` and add some extra text to it in the same style. Enter the ``mapText(String => String)`` function, available on all promptlets, which allows you to post-process the raw text any way you want. For your convenience some common post-processors like ``padLeft`` and ``padRight`` have alrady been defined.
 
 Example:
 ```scala
@@ -206,7 +206,7 @@ PromptTheme(List(
   gitBranch(clean = fg(green), dirty = fg(yellow)),
   text(" in ", fg(red)),
   currentProject(fg(magenta)),
-  text(" ⇒  ", fg(red))
+  text(" =>  ", fg(red))
 ))
 ```
 
@@ -221,7 +221,7 @@ PromptTheme(
     currentProject(fg(250).bg(235)).pad(" "),
     text(" ", NoStyle)
   ),
-  (previous, next) ⇒ StyledText("", fg(previous.style.background).bg(next.style.background))
+  (previous, next) => StyledText("", fg(previous.style.background).bg(next.style.background))
 )
 ```
 

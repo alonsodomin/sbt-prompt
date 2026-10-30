@@ -48,7 +48,7 @@ trait PromptThemes extends Promptlets with PromptletSeparators {
       currentProject(fg(250).bg(235)).pad(" "),
       text(" ", NoStyle)
     ),
-    (previous, next) ⇒ StyledText("", fg(previous.style.background).bg(next.style.background))
+    (previous, next) => StyledText("", fg(previous.style.background).bg(next.style.background))
   )
 
   @deprecated("Renamed to prevent name clashes", "v0.2") val Default    = DefaultTheme

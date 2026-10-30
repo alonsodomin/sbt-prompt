@@ -3,11 +3,24 @@ import org.typelevel.scalacoptions.ScalacOptions
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
+lazy val scala212 = "2.12.21"
+lazy val scala3   = "3.8.4"
+
 lazy val root = project
   .withId("sbt-prompt")
   .in(file("."))
   .settings(
     sbtPlugin := true,
+
+    scalaVersion       := scala212,
+    crossScalaVersions := Seq(scala212, scala3),
+
+    pluginCrossBuild / sbtVersion := {
+      scalaBinaryVersion.value match {
+        case "2.12" => (ThisBuild / sbtVersion).value
+        case _      => "2.0.0"
+      }
+    },
 
     libraryDependencies += {
       val currentSbtVersion = (pluginCrossBuild / sbtBinaryVersion).value
@@ -39,7 +52,14 @@ lazy val root = project
 
     versionScheme := Some("semver-spec"),
 
-    scalacOptions := Seq("-encoding", "utf8", "-deprecation", "-Xlog-reflective-calls", "-Ywarn-unused-import"),
+    scalacOptions ++= {
+      scalaBinaryVersion.value match {
+        case "2.12" =>
+          Seq("-encoding", "utf8", "-deprecation", "-Xlog-reflective-calls", "-Ywarn-unused-import")
+        case _ =>
+          Seq("-encoding", "utf8", "-deprecation", "-Wunused:imports")
+      }
+    },
 
     semanticdbVersion := scalafixSemanticdb.revision,
     semanticdbEnabled := true,

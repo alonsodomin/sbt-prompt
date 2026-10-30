@@ -1,1 +1,1 @@
-addSbtPlugin("com.scalapenos" % "sbt-prompt" % "0.2")
+addSbtPlugin("com.scalapenos" % "sbt-prompt" % "2.0.0")
