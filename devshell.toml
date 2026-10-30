@@ -1,8 +1,4 @@
 [devshell]
 name = "sbt-prompt"
 
-packages = [
-  "jdk21_headless",
-  "sbt",
-  "scalafmt",
-]
+packages = ["jdk21_headless", "sbt", "scalafmt"]
