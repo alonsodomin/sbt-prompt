@@ -70,7 +70,12 @@ A [**promptlet**](src/main/scala/com/scalapenos/sbt/prompt/Promptlet.scala) is a
 
 A [**style**](src/main/scala/com/scalapenos/sbt/prompt/Styles.scala) is a combination of a foregound color and a background color with a little builder API for combining two colors into a style.
 
-A [**color**](src/main/scala/com/scalapenos/sbt/prompt/Colors.scala) is a little wrapper around a color code from the ANSI 256 color space (i.e. a number from 0 up to and including 255) plus the ability to produce the correct escape codes for rendering themselves to any terminal configured to emulate *xterm-256color* (or one compatible with it). There is a handy list of links to color references at the bottom of this README.
+A [**color**](src/main/scala/com/scalapenos/sbt/prompt/Colors.scala) is a little wrapper around a color code that produces the correct escape codes for rendering itself to any terminal. There are two color spaces:
+
+- the **ANSI 256 color space**, addressed with a number from 0 up to and including 255, for terminals configured to emulate *xterm-256color* (or one compatible with it), and
+- the **24-bit true color space**, addressed with three components from 0 up to and including 255 or with a hexadecimal code like `"#0099FF"`, for terminals that support *truecolor* (or *direct color*).
+
+There is a handy list of links to color references at the bottom of this README.
 
 Advanced prompt themes, like the builtin Scalapenos theme, might want to create some kind of styled transition between promptlets based on their separate styles. To enable this, a prompt theme can be configured with an optional [**separator**](src/main/scala/com/scalapenos/sbt/prompt/PromptletSeparator.scala), which is a function that takes the styled output of two promptlets to produce some styled text that will be rendered in between those two promptlets.
 
@@ -225,9 +230,30 @@ PromptTheme(
 )
 ```
 
+#### The Blueforest theme
+The Blueforest theme is a powerline prompt in the blueforest palette: the sbt logo, the current project, the current Git branch and the Scala version of the project, joined by powerline arrows and closed off with a tip. The branch is green when the working tree is clean and yellow when it is dirty.
+
+The palette is expressed in 24-bit true color, so it is exact instead of the nearest ANSI 256 approximation, and the theme uses Nerd Font glyphs for the logo and the separators. You will need a terminal that supports true color and a [Nerd Font](https://www.nerdfonts.com/) to render it properly.
+
+```scala
+PromptTheme(
+  List(
+    text(" \ue68d ", bg("#0099FF").fg("#0A101D")),
+    currentProject(bg("#1b2b40").fg("#91CCFF")).pad(" "),
+    gitBranch(clean = bg("#273e5c").fg("#80ff80"), dirty = bg("#273e5c").fg("#ffcc33"))
+      .padLeft(" \ue0a0 ")
+      .padRight(" "),
+    currentScalaVersion(bg("#375780").fg("#FF8080")).padLeft(" \ue737 ").padRight(" "),
+    text("\u200b", NoStyle)
+  ),
+  (previous, next) => StyledText("\ue0b0", fg(previous.style.background).bg(next.style.background))
+)
+```
+
 ### Examples
 - How to [enable the plugin with the default theme](examples/default-theme/build.sbt)
 - How to [enable the Scalapenos theme](examples/scalapenos-theme/build.sbt)
+- How to [enable the Blueforest theme](examples/blueforest-theme/build.sbt)
 - How to [configure a custom theme](examples/custom-theme-1/build.sbt)
 
 

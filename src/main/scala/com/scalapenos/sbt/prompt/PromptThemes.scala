@@ -51,6 +51,37 @@ trait PromptThemes extends Promptlets with PromptletSeparators {
     (previous, next) => StyledText("", fg(previous.style.background).bg(next.style.background))
   )
 
+  /**
+   * The Blueforest theme is a powerline prompt in the blueforest palette:
+   * the sbt logo, the current project, the current Git branch and the Scala
+   * version of the project, joined by powerline arrows and closed off with a
+   * tip.
+   *
+   * The segments step through the blueforest blues, from the logo to the
+   * Scala version, and the branch is green when the working tree is clean
+   * and yellow when it is dirty.
+   *
+   * The colors are true-color (24-bit) escapes, so the palette is exact
+   * instead of the nearest ANSI 256 approximation. Your terminal needs to
+   * support true color for that to make a difference.
+   *
+   * The theme uses Nerd Font glyphs for the logo and the separators, so you
+   * will need a Nerd Font (or a Powerline-patched font) to render it
+   * properly.
+   */
+  val BlueforestTheme = PromptTheme(
+    List(
+      text(" \ue68d ", bg("#0099FF").fg("#0A101D")),
+      currentProject(bg("#1b2b40").fg("#91CCFF")).pad(" "),
+      gitBranch(clean = bg("#273e5c").fg("#80ff80"), dirty = bg("#273e5c").fg("#ffcc33"))
+        .padLeft(" \ue0a0 ")
+        .padRight(" "),
+      currentScalaVersion(bg("#375780").fg("#FF8080")).padLeft(" \ue737 ").padRight(" "),
+      text("\u200b", NoStyle)
+    ),
+    (previous, next) => StyledText("\ue0b0", fg(previous.style.background).bg(next.style.background))
+  )
+
   @deprecated("Renamed to prevent name clashes", "v0.2") val Default    = DefaultTheme
   @deprecated("Renamed to prevent name clashes", "v0.2") val Scalapenos = ScalapenosTheme
 }

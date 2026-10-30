@@ -11,9 +11,11 @@ case class Style(background: Color = Colors.NoColor, foreground: Color = Colors.
 
   def bg(color: Color) = copy(background = color)
   def bg(color: Int)   = copy(background = Color(color))
+  def bg(code: String) = copy(background = Color.hex(code))
 
   def fg(color: Color) = copy(foreground = color)
   def fg(color: Int)   = copy(foreground = Color(color))
+  def fg(code: String) = copy(foreground = Color.hex(code))
 }
 
 /** Simple mixin trait providing easy access to Style factory methods. */
@@ -22,9 +24,11 @@ trait Styles extends Colors {
 
   def bg(color: Color) = Style(background = color)
   def bg(color: Int)   = Style(background = Color(color))
+  def bg(code: String) = Style(background = Color.hex(code))
 
   def fg(color: Color) = Style(foreground = color)
   def fg(color: Int)   = Style(foreground = Color(color))
+  def fg(code: String) = Style(foreground = Color.hex(code))
 }
 
 object Styles extends Styles
