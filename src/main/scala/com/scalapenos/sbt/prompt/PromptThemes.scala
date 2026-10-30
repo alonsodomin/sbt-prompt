@@ -81,9 +81,6 @@ trait PromptThemes extends Promptlets with PromptletSeparators {
     ),
     (previous, next) => StyledText("\ue0b0", fg(previous.style.background).bg(next.style.background))
   )
-
-  @deprecated("Renamed to prevent name clashes", "v0.2") val Default    = DefaultTheme
-  @deprecated("Renamed to prevent name clashes", "v0.2") val Scalapenos = ScalapenosTheme
 }
 
 object PromptThemes extends PromptThemes
