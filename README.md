@@ -25,13 +25,13 @@ That example prompt consists of three **promptlets**:
 All promptlets can be styled with foreground and background colors and you can customize them even further with prefixes, suffixes, and other text transformers. See below for all customization options.
 
 ### Getting Started
-It is recommened to use SBT 0.10.x or higher for this plugin to work correctly, although it will probably work for earlier versions since it was originally developed for sbt 0.13.6.
-It was lasted tested with SBT 0.10.7
+The plugin is compatible with SBT 1.12.x and 2.x. It is recommened to use SBT 1.12.x or higher for this plugin to work correctly, although it will probably work for earlier versions since (it was originally developed for sbt 0.13.6 but SBT versions prior to 1.0 are not supported).
+It was lasted tested with SBT 1.13.1 and 2.0
 
 Add the following line to your `plugins.sbt` file (or `~/.sbt/1.0/plugins/plugin.sbt` to enable it for all projects):
 
 ```scala
-addSbtPlugin("com.github.alonsodomin" % "sbt-prompt" % "2.0.0")
+addSbtPlugin("com.github.alonsodomin" % "sbt-prompt" % "3.0.0")
 ```
 
 For normal `build.sbt` projects, this will automatically enable the default prompt theme, which looks like this (green for a clean Git repo, yellow for a dirty one):
