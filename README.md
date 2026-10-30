@@ -31,7 +31,7 @@ It was lasted tested with SBT 0.10.7
 Add the following line to your `plugins.sbt` file (or `~/.sbt/1.0/plugins/plugin.sbt` to enable it for all projects):
 
 ```scala
-addSbtPlugin("com.scalapenos" % "sbt-prompt" % "2.0.0")
+addSbtPlugin("com.github.alonsodomin" % "sbt-prompt" % "2.0.0")
 ```
 
 For normal `build.sbt` projects, this will automatically enable the default prompt theme, which looks like this (green for a clean Git repo, yellow for a dirty one):
@@ -41,9 +41,9 @@ For normal `build.sbt` projects, this will automatically enable the default prom
 If you want to use one of the existing themes, like the "Scalapenos" theme shown at the top of this README, just add the following import and setting to your `build.sbt` file (or to any sbt file in `~/.sbt/1.0/`):
 
 ```scala
-import com.scalapenos.sbt.prompt.SbtPrompt.autoImport._
+import com.github.alonsodomin.sbt.prompt.SbtPrompt.autoImport._
 
-promptTheme := com.scalapenos.sbt.prompt.PromptThemes.ScalapenosTheme
+promptTheme := com.github.alonsodomin.sbt.prompt.PromptThemes.ScalapenosTheme
 ```
 
 > **Note:** The Scalapenos theme uses some fancy unicode symbols as separators but these are not usually supported by the average console font. You will need to configure your terminal with [a Powerline-patched font](https://github.com/Lokaltog/powerline-fonts) or things will look a bit weird.
@@ -51,7 +51,7 @@ promptTheme := com.scalapenos.sbt.prompt.PromptThemes.ScalapenosTheme
 If you are using a Build.scala definition or when using custom themes, please add these alternative imports:
 
 ```scala
-import com.scalapenos.sbt.prompt._
+import com.github.alonsodomin.sbt.prompt._
 import SbtPrompt.autoImport._
 ```
 
@@ -62,22 +62,22 @@ The source code contains a number of small, self-contained example projects that
 Writing your own prompt theme is prety easy. Let's start with some definitions.
 
 ### Definitions
-A [**prompt theme**](src/main/scala/com/scalapenos/sbt/prompt/PromptTheme.scala) is a sequence of so-called **promptlets** that together represent the entire prompt.
+A [**prompt theme**](src/main/scala/com/github/alonsodomin/sbt/prompt/PromptTheme.scala) is a sequence of so-called **promptlets** that together represent the entire prompt.
 
-A [**promptlet**](src/main/scala/com/scalapenos/sbt/prompt/Promptlet.scala) is a function that takes the [current project State](http://www.scala-sbt.org/0.13.6/api/#sbt.State) and produces some **styled text**.
+A [**promptlet**](src/main/scala/com/github/alonsodomin/sbt/prompt/Promptlet.scala) is a function that takes the [current project State](http://www.scala-sbt.org/0.13.6/api/#sbt.State) and produces some **styled text**.
 
-[**Styled text**](src/main/scala/com/scalapenos/sbt/prompt/StyledText.scala) is some static text combined with a **style**.
+[**Styled text**](src/main/scala/com/github/alonsodomin/sbt/prompt/StyledText.scala) is some static text combined with a **style**.
 
-A [**style**](src/main/scala/com/scalapenos/sbt/prompt/Styles.scala) is a combination of a foregound color and a background color with a little builder API for combining two colors into a style.
+A [**style**](src/main/scala/com/github/alonsodomin/sbt/prompt/Styles.scala) is a combination of a foregound color and a background color with a little builder API for combining two colors into a style.
 
-A [**color**](src/main/scala/com/scalapenos/sbt/prompt/Colors.scala) is a little wrapper around a color code that produces the correct escape codes for rendering itself to any terminal. There are two color spaces:
+A [**color**](src/main/scala/com/github/alonsodomin/sbt/prompt/Colors.scala) is a little wrapper around a color code that produces the correct escape codes for rendering itself to any terminal. There are two color spaces:
 
 - the **ANSI 256 color space**, addressed with a number from 0 up to and including 255, for terminals configured to emulate *xterm-256color* (or one compatible with it), and
 - the **24-bit true color space**, addressed with three components from 0 up to and including 255 or with a hexadecimal code like `"#0099FF"`, for terminals that support *truecolor* (or *direct color*).
 
 There is a handy list of links to color references at the bottom of this README.
 
-Advanced prompt themes, like the builtin Scalapenos theme, might want to create some kind of styled transition between promptlets based on their separate styles. To enable this, a prompt theme can be configured with an optional [**separator**](src/main/scala/com/scalapenos/sbt/prompt/PromptletSeparator.scala), which is a function that takes the styled output of two promptlets to produce some styled text that will be rendered in between those two promptlets.
+Advanced prompt themes, like the builtin Scalapenos theme, might want to create some kind of styled transition between promptlets based on their separate styles. To enable this, a prompt theme can be configured with an optional [**separator**](src/main/scala/com/github/alonsodomin/sbt/prompt/PromptletSeparator.scala), which is a function that takes the styled output of two promptlets to produce some styled text that will be rendered in between those two promptlets.
 
 
 ### Available promptlets

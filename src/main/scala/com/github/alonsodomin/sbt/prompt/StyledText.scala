@@ -1,4 +1,4 @@
-package com.scalapenos.sbt.prompt
+package com.github.alonsodomin.sbt.prompt
 
 /**
  * A StyledText instance represents the combination of some

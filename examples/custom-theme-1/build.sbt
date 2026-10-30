@@ -1,4 +1,4 @@
-import com.scalapenos.sbt.prompt._
+import com.github.alonsodomin.sbt.prompt._
 import SbtPrompt.autoImport._
 
 lazy val customTheme1 = (project in file(".")).settings(
@@ -6,9 +6,9 @@ lazy val customTheme1 = (project in file(".")).settings(
   version              := "0.1",
   description          := "An example project to show off what you can do with sbt-prompt",
   startYear            := Some(2014),
-  homepage             := Some(url("https://github.com/agemooij/sbt-prompt")),
-  organization         := "com.scalapenos",
-  organizationHomepage := Some(url("http://scalapenos.com/")),
+  homepage             := Some(url("https://github.com/alonsodomin/sbt-prompt")),
+  organization         := "com.github.alonsodomin",
+  organizationHomepage := Some(url("https://github.com/alonsodomin/sbt-prompt")),
   licenses             := Seq(("MIT", url("http://opensource.org/licenses/MIT"))),
   promptTheme          := PromptTheme(
     List(

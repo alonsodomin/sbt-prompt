@@ -1,4 +1,4 @@
-package com.scalapenos.sbt.prompt
+package com.github.alonsodomin.sbt.prompt
 
 /**
  * Represents an ANSI color escape code for either a foreground

@@ -1,4 +1,4 @@
-package com.scalapenos.sbt.prompt
+package com.github.alonsodomin.sbt.prompt
 
 /**
  * A PromptletSeparator is a function that takes two StyledText

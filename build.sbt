@@ -30,11 +30,11 @@ lazy val root = project
     libraryDependencies += "org.slf4j" % "slf4j-nop" % "2.0.20",
 
     description          := "An SBT plugin for making your SBT prompt more awesome",
-    organization         := "com.scalapenos",
+    organization         := "com.github.alonsodomin",
     licenses             := List("MIT" -> url("http://opensource.org/licenses/MIT")),
     startYear            := Some(2014),
-    homepage             := Some(url("https://github.com/agemooij/sbt-prompt")),
-    organizationHomepage := Some(url("https://github.com/agemooij/sbt-prompt")),
+    homepage             := Some(url("https://github.com/alonsodomin/sbt-prompt")),
+    organizationHomepage := Some(url("https://github.com/alonsodomin/sbt-prompt")),
     developers           := List(
       Developer(
         "agemooij",

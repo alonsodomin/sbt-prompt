@@ -1,4 +1,4 @@
-package com.scalapenos.sbt.prompt
+package com.github.alonsodomin.sbt.prompt
 
 /**
  * A Style is a simple DSL-like wrapper around Color that combines a
