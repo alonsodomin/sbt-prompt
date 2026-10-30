@@ -2,7 +2,7 @@
 name = "sbt-prompt"
 
 packages = [
-  "jdk21",
+  "jdk21_headless",
   "sbt",
   "scalafmt",
 ]
