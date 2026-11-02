@@ -29,6 +29,8 @@ lazy val root = project
 
     libraryDependencies += "org.slf4j" % "slf4j-nop" % "2.0.20",
 
+    libraryDependencies += "org.scalameta" %% "munit" % "1.3.6" % Test,
+
     description          := "An SBT plugin for making your SBT prompt more awesome",
     organization         := "com.github.alonsodomin",
     licenses             := List("MIT" -> url("http://opensource.org/licenses/MIT")),

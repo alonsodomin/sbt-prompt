@@ -53,13 +53,14 @@ trait PromptThemes extends Promptlets with PromptletSeparators {
 
   /**
    * The Blueforest theme is a powerline prompt in the blueforest palette:
-   * the sbt logo, the current project, the current Git branch and the Scala
-   * version of the project, joined by powerline arrows and closed off with a
-   * tip.
+   * the sbt logo, the current project, the current Git branch with the status
+   * of the repository, and the Scala version of the project, joined by
+   * powerline arrows and closed off with a tip.
    *
    * The segments step through the blueforest blues, from the logo to the
-   * Scala version, and the branch is green when the working tree is clean
-   * and yellow when it is dirty.
+   * Scala version, and the branch and the status of the repository share the
+   * colours of the Git segment of Starship, whatever the state of the
+   * working tree is.
    *
    * The colors are true-color (24-bit) escapes, so the palette is exact
    * instead of the nearest ANSI 256 approximation. Your terminal needs to
@@ -73,9 +74,10 @@ trait PromptThemes extends Promptlets with PromptletSeparators {
     List(
       text(" \ue68d ", bg("#0099FF").fg("#0A101D")),
       currentProject(bg("#1b2b40").fg("#91CCFF")).pad(" "),
-      gitBranch(clean = bg("#273e5c").fg("#80ff80"), dirty = bg("#273e5c").fg("#ffcc33"))
+      gitBranch(clean = bg("#273e5c").fg("#ffcc33"), dirty = bg("#273e5c").fg("#ffcc33"))
         .padLeft(" \ue0a0 ")
         .padRight(" "),
+      gitStatus(bg("#273e5c").fg("#ffcc33")).padRight(" "),
       currentScalaVersion(bg("#375780").fg("#FF8080")).padLeft(" \ue737 ").padRight(" "),
       text(" ", NoStyle) // Blank space for separation between the prompt and the cursor
     ),

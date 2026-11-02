@@ -106,10 +106,25 @@ The available Git information is encoded in these two case classes:
 
 ```scala
 case class GitInfo(branch: String, status: GitStatus)
-case class GitStatus(nrModified: Int, nrUntracked: Int) {
-  val dirty = nrModified > 0 || nrUntracked > 0
+case class GitStatus(
+  nrModified: Int,
+  nrUntracked: Int,
+  nrStaged: Int = 0,
+  nrDeleted: Int = 0,
+  nrRenamed: Int = 0,
+  nrConflicted: Int = 0,
+  nrStashed: Int = 0,
+  nrAhead: Int = 0,
+  nrBehind: Int = 0
+) {
+  val nrChanged: Int = nrModified + nrStaged
+  val dirty: Boolean = nrChanged > 0 || nrUntracked > 0
 }
 ```
+
+The files are counted the way Starship counts them, from the porcelain format of version 2 of Git: ``nrModified`` are the files modified in the working tree, ``nrStaged`` are the ones changed in the index, ``nrDeleted`` are the ones deleted, ``nrRenamed`` are the ones renamed, ``nrConflicted`` are the ones with a conflict in them, and ``nrUntracked`` are the ones Git does not know about. The number of commits that are not pushed yet are in ``nrAhead`` and ``nrBehind``.
+
+A file that is staged and modified afterwards is a staged file and a modified one, so it is counted in both of them. ``nrChanged`` is the number of the files that changed, and it is the number the themes that only care about whether the working tree is clean need.
 
 The ``gitBranch`` promptlet is built using ``gitPromptlet``:
 
@@ -119,6 +134,15 @@ def gitBranch(clean: Style = NoStyle, dirty: Style = NoStyle): Promptlet = gitPr
   case None      => StyledText.Empty
 }
 ```
+
+#### Promptlet: ``gitStatus(style)``
+Renders the status of the repository with the symbols Starship uses: one per state, with the number of files or commits behind it. Example:
+
+```scala
+gitStatus(fg(yellow))
+```
+
+The symbols are ``=`` for the conflicts, ``$`` for the stash, ``✘`` for the deleted files, ``»`` for the renamed ones, ``!`` for the modified ones, ``+`` for the staged ones, and ``?`` for the untracked ones. The commits that are not pushed yet come after them: ``⇡`` for the ones ahead of the branch being tracked, ``⇣`` for the ones behind it, and ``⇕`` for the ones that diverged from it. A repository that is clean and up to date produces ``StyledText.Empty``.
 
 #### Promptlet: ``currentScalaVersion(style)``
 Renders the current scala version in the project. Example:
@@ -231,7 +255,9 @@ PromptTheme(
 ```
 
 #### The Blueforest theme
-The Blueforest theme is a powerline prompt in the blueforest palette: the sbt logo, the current project, the current Git branch and the Scala version of the project, joined by powerline arrows and closed off with a tip. The branch is green when the working tree is clean and yellow when it is dirty. The prompt ends with a blank column between the tip and the cursor.
+The Blueforest theme is a powerline prompt in the blueforest palette: the sbt logo, the current project, the current Git branch with the status of the repository, and the Scala version of the project, joined by powerline arrows and closed off with a tip. The prompt ends with a blank column between the tip and the cursor.
+
+The theme is a port of the [Blueforest preset of Starship](https://github.com/alonsodomin/blueforest-theme), and the segments follow it: the project is painted with the colours of the directory of Starship, the branch and the status of the repository share the colours of its Git segment, and the Scala version is painted with the colours of its Scala segment. The status of the repository is read the way Starship reads it, so the symbols of the two of them are the same: the number of files that are staged, modified, deleted, renamed, untracked or in conflict, and the number of commits that are not pushed yet.
 
 The palette is expressed in 24-bit true color, so it is exact instead of the nearest ANSI 256 approximation, and the theme uses Nerd Font glyphs for the logo and the separators. You will need a terminal that supports true color and a [Nerd Font](https://www.nerdfonts.com/) to render it properly.
 
@@ -240,9 +266,10 @@ PromptTheme(
   List(
     text(" \ue68d ", bg("#0099FF").fg("#0A101D")),
     currentProject(bg("#1b2b40").fg("#91CCFF")).pad(" "),
-    gitBranch(clean = bg("#273e5c").fg("#80ff80"), dirty = bg("#273e5c").fg("#ffcc33"))
+    gitBranch(clean = bg("#273e5c").fg("#ffcc33"), dirty = bg("#273e5c").fg("#ffcc33"))
       .padLeft(" \ue0a0 ")
       .padRight(" "),
+    gitStatus(bg("#273e5c").fg("#ffcc33")).padRight(" "),
     currentScalaVersion(bg("#375780").fg("#FF8080")).padLeft(" \ue737 ").padRight(" "),
     text(" ", NoStyle)
   ),
