@@ -3,8 +3,10 @@ import org.typelevel.scalacoptions.ScalacOptions
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
-lazy val scala212 = "2.13.18"
+lazy val scala212 = "2.12.21"
 lazy val scala3   = "3.10.0"
+
+addSbtPlugin("com.github.sbt" % "sbt2-compat" % "0.2.0")
 
 lazy val root = project
   .withId("sbt-prompt")
@@ -12,13 +14,13 @@ lazy val root = project
   .settings(
     sbtPlugin := true,
 
-    scalaVersion       := scala212,
-    crossScalaVersions := Seq(scala212, scala3),
+    crossScalaVersions := Seq(scala3, scala212),
+    scalaVersion       := crossScalaVersions.value.head,
 
     pluginCrossBuild / sbtVersion := {
       scalaBinaryVersion.value match {
-        case "2.12" => (ThisBuild / sbtVersion).value
-        case _      => "2.0.0"
+        case "2.12" => "1.13.1"
+        case _      => (ThisBuild / sbtVersion).value
       }
     },
 
@@ -27,9 +29,8 @@ lazy val root = project
       Defaults.sbtPluginExtra("com.github.sbt" % "sbt-git" % "2.2.0", currentSbtVersion, scalaBinaryVersion.value)
     },
 
-    libraryDependencies += "org.slf4j" % "slf4j-nop" % "2.0.20",
-
-    libraryDependencies += "org.scalameta" %% "munit" % "1.3.6" % Test,
+    libraryDependencies += "org.slf4j"      % "slf4j-nop" % "2.0.20",
+    libraryDependencies += "org.scalameta" %% "munit"     % "1.3.6" % Test,
 
     description          := "An SBT plugin for making your SBT prompt more awesome",
     organization         := "com.github.alonsodomin",
