@@ -4,7 +4,7 @@ import org.typelevel.scalacoptions.ScalacOptions
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val scala212 = "2.13.18"
-lazy val scala3   = "3.8.4"
+lazy val scala3   = "3.10.0"
 
 lazy val root = project
   .withId("sbt-prompt")
