@@ -1,8 +1,16 @@
 name: Release
+
 on:
   push:
     branches: [master, main]
     tags: ["*"]
+
+env:
+  PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+  PGP_SECRET: ${{ secrets.PGP_SECRET }}
+  SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+  SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -15,8 +23,3 @@ jobs:
       - run: nix flake check
       - run: nix develop --command sbt +testFull
       - run: nix develop --impure --command sbt ci-release
-        env:
-          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
-          PGP_SECRET: ${{ secrets.PGP_SECRET }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
