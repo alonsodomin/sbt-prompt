@@ -83,6 +83,43 @@ trait PromptThemes extends Promptlets with PromptletSeparators {
     ),
     (previous, next) => StyledText("\ue0b0", fg(previous.style.background).bg(next.style.background))
   )
+
+  /**
+   * The light variant of the Blueforest theme is the same prompt in the light
+   * palette of Blueforest: the same segments, in the same order, joined by
+   * the same powerline arrows.
+   *
+   * The roles of the segments are the ones of the dark variant: the logo
+   * wears the blue of the accent, the project wears the blue of the
+   * secondary on the surface, the branch and the status wear the amber of
+   * the tertiary on the surface variant, and the Scala version wears the
+   * red of the error on the hover.
+   *
+   * The segments recede into the background as they go, the other way round
+   * than in the dark variant, because a prompt on a light background needs
+   * darker segments to stand out from it.
+   *
+   * The colors are true-color (24-bit) escapes, so the palette is exact
+   * instead of the nearest ANSI 256 approximation. Your terminal needs to
+   * support true color for that to make a difference.
+   *
+   * The theme uses Nerd Font glyphs for the logo and the separators, so you
+   * will need a Nerd Font (or a Powerline-patched font) to render it
+   * properly.
+   */
+  val BlueforestLightTheme = PromptTheme(
+    List(
+      text(" \ue68d ", bg("#0099FF").fg("#141F2E")),
+      currentProject(bg("#E8ECF2").fg("#3A5F8A")).pad(" "),
+      gitBranch(clean = bg("#E0E4EA").fg("#B3871F"), dirty = bg("#E0E4EA").fg("#B3871F"))
+        .padLeft(" \ue0a0 ")
+        .padRight(" "),
+      gitStatus(bg("#E0E4EA").fg("#B3871F")).padRight(" "),
+      currentScalaVersion(bg("#C9CDD3").fg("#DC322F")).padLeft(" \ue737 ").padRight(" "),
+      text(" ", NoStyle) // Blank space for separation between the prompt and the cursor
+    ),
+    (previous, next) => StyledText("\ue0b0", fg(previous.style.background).bg(next.style.background))
+  )
 }
 
 object PromptThemes extends PromptThemes

@@ -55,7 +55,7 @@ import com.github.alonsodomin.sbt.prompt._
 import SbtPrompt.autoImport._
 ```
 
-The source code contains a number of small, self-contained example projects that show you how to [enable the plugin with the default theme](examples/default-theme/build.sbt), how to [enable the Scalapenos theme](examples/scalapenos-theme/build.sbt), and how to [configure a custom theme](examples/custom-theme-1/build.sbt).
+The source code contains a number of small, self-contained example projects that show you how to [enable the plugin with the default theme](examples/default-theme/build.sbt), how to [enable the Scalapenos theme](examples/scalapenos-theme/build.sbt), how to [enable the Blueforest theme](examples/blueforest-theme/build.sbt), how to [enable the light variant of the Blueforest theme](examples/blueforest-light-theme/build.sbt), and how to [configure a custom theme](examples/custom-theme-1/build.sbt).
 
 
 ## Customization
@@ -277,10 +277,32 @@ PromptTheme(
 )
 ```
 
+#### The light variant of the Blueforest theme
+The light variant of the Blueforest theme is the same prompt in the light palette of Blueforest: the same segments, in the same order, joined by the same powerline arrows.
+
+The roles of the segments are the ones of the dark variant: the logo wears the blue of the accent, the project wears the blue of the secondary on the surface, the branch and the status wear the amber of the tertiary on the surface variant, and the Scala version wears the red of the error on the hover. The segments recede into the background as they go, the other way round than in the dark variant, because a prompt on a light background needs darker segments to stand out from it.
+
+```scala
+PromptTheme(
+  List(
+    text(" \ue68d ", bg("#0099FF").fg("#141F2E")),
+    currentProject(bg("#E8ECF2").fg("#3A5F8A")).pad(" "),
+    gitBranch(clean = bg("#E0E4EA").fg("#B3871F"), dirty = bg("#E0E4EA").fg("#B3871F"))
+      .padLeft(" \ue0a0 ")
+      .padRight(" "),
+    gitStatus(bg("#E0E4EA").fg("#B3871F")).padRight(" "),
+    currentScalaVersion(bg("#C9CDD3").fg("#DC322F")).padLeft(" \ue737 ").padRight(" "),
+    text(" ", NoStyle)
+  ),
+  (previous, next) => StyledText("\ue0b0", fg(previous.style.background).bg(next.style.background))
+)
+```
+
 ### Examples
 - How to [enable the plugin with the default theme](examples/default-theme/build.sbt)
 - How to [enable the Scalapenos theme](examples/scalapenos-theme/build.sbt)
 - How to [enable the Blueforest theme](examples/blueforest-theme/build.sbt)
+- How to [enable the light variant of the Blueforest theme](examples/blueforest-light-theme/build.sbt)
 - How to [configure a custom theme](examples/custom-theme-1/build.sbt)
 
 
