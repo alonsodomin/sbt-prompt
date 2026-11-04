@@ -1,1 +1,1 @@
-addSbtPlugin("com.github.alonsodomin" % "sbt-prompt" % "3.2.0")
+addSbtPlugin("com.github.alonsodomin" % "sbt-prompt" % "3.2.1")
