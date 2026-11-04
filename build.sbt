@@ -4,7 +4,7 @@ import org.typelevel.scalacoptions.ScalacOptions
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 lazy val scala212 = "2.12.21"
-lazy val scala3   = "3.10.0"
+lazy val scala3   = "3.8.3"
 
 addSbtPlugin("com.github.sbt" % "sbt2-compat" % "0.2.0")
 
